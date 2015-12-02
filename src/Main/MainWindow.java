@@ -91,8 +91,6 @@ public class MainWindow extends Application {
 		BorderPane layout = new BorderPane();
 
 		layout.setTop(mainMenu);
-		//layout.setBottom(authorButton);
-
 
 		Scene window = new Scene(layout,400,400);
 		window.getStylesheets().add("/Muki.css");
