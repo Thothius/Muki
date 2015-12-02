@@ -18,11 +18,8 @@ public class PlansPage {
 
 		Label authorLabel = new Label();
 		authorLabel.setText(name);
-		//label1.setAlignment(Pos.TOP_CENTER);
-
 		Button closeButton = new Button("Main Menu");
 		closeButton.setOnAction( e-> window.close());
-		//closeButton.setAlignment(Pos.BOTTOM_CENTER);
 
 		VBox layout = new VBox(20);
 		layout.getChildren().addAll(authorLabel, closeButton);

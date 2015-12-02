@@ -9,21 +9,20 @@ import javafx.geometry.*;
 
 public class ExitBox {
 	
-	static boolean confirmer;
+	public static boolean confirmer;
 	
-	public static boolean display(String title, String name){
+	public static boolean display(){
 		
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
+		String title = "Exit?";
 		window.setTitle(title);
-		window.setMinWidth(400);
-		window.setMinHeight(200);
-
-		Label label = new Label();
-		label.setText(name);
-
+		window.setMinWidth(200);
+		window.setMinHeight(50);
 		Button yesButton = new Button("Yes");
 		Button noButton = new Button("No");
+		
+		
 		
 		yesButton.setOnAction( e-> {
 			confirmer = true;
@@ -35,8 +34,8 @@ public class ExitBox {
 			window.close();
 		});
 
-		VBox layout = new VBox(20);
-		layout.getChildren().addAll(label, yesButton, noButton);
+		HBox layout = new HBox(20);
+		layout.getChildren().addAll(yesButton, noButton);
 		layout.setAlignment(Pos.CENTER);
 
 		Scene scene = new Scene(layout);
