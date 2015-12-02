@@ -1,7 +1,6 @@
 # Muki
-
 <b>Muki is a prototype "To do list" application.</b>
-<br><br>
+<hr>
 Current version 0.1a
 <br><br>
 <b>Current functionality</b>
