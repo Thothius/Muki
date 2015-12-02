@@ -1,6 +1,7 @@
 # Muki
 https://www.dropbox.com/s/jo1va2ptlzco2sv/mukiLogo.png?dl=0
-![alt tag](https://www.dropbox.com/s/jo1va2ptlzco2sv/mukiLogo.png?dl=0)
+<img src="https://www.dropbox.com/s/jo1va2ptlzco2sv/mukiLogo.png?dl=0" alt="Mukike" style="width:250px;height:2508px;">
+
 <b>Muki is a prototype "To do list" application.</b> Current version 0.1a
 
 
