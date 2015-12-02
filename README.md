@@ -1,8 +1,9 @@
 # Muki
 
-Muki is a prototype "To do list" application.
-
+<b>Muki is a prototype "To do list" application.</b>
+<br><br>
 Current version 0.1a
-
+<br><br>
 <b>Current functionality</b>
-1. Basic UI 
+<br>1. Basic UI 
+<br>2. ...
