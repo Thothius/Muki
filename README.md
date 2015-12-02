@@ -4,6 +4,6 @@
 <b>Current functionality</b>
 <ul>
 <li>
-Basic UI with CSS styling
+Basic UI with navigation and css styling
 </li>
 </ul>
