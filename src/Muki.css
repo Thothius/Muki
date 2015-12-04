@@ -1,6 +1,6 @@
 .root {
 	-fx-background-color: #A5DCE8;
-	-fx-font-size: 18px;
+	-fx-font-size: 14px;
 }
 
 .menu{
@@ -9,7 +9,16 @@
 	font-weight: bold;
 }
 
+
 .menu-bar{
 	
 	-fx-background-color: #83C4D3;
+}
+
+.button{
+	-fx-background-color: #5dbed0;
+}
+.button: hover {
+		-fx-background-color: #0096c9;
+		-fx-text-fill: white;
 }

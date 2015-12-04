@@ -29,4 +29,6 @@ public class PlansPage {
 		window.setScene(scene);
 		window.showAndWait();
 	}
+	
+	
 }
