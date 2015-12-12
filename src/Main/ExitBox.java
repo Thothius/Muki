@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.geometry.*;
 
 
-public class ExitApplicationBox {							// A method to display a pop-up stage and ask the user if they want to close the application
+public class ExitBox {							// A method to display a pop-up stage and ask the user if they want to close the application
 
 	public static boolean confirmExit;						// Boolean to store the answer
 
