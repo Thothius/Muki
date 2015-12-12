@@ -6,6 +6,12 @@
 <b>Current functionality</b>
 <ul>
 <li>
-Basic UI with navigation and css styling
+UI; Custom CSS; Add/Remove plans
+</li>
+</ul>
+<b>Planned functionalty</b>
+<ul>
+<li>
+InputValidation; Selection boxes, Date and time display; Read/Write to txt file
 </li>
 </ul>
