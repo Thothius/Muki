@@ -6,12 +6,12 @@
 <b>Current functionality</b>
 <ul>
 <li>
-UI; Custom CSS; Add/Remove plans
+UI; Custom CSS; Add/Remove plans; InputValidation
 </li>
 </ul>
 <b>Planned functionalty</b>
 <ul>
 <li>
-InputValidation; Selection boxes, Date and time display; Read/Write to txt file
+Read and Write to a file
 </li>
 </ul>
