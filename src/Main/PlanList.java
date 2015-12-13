@@ -1,8 +1,16 @@
 package Main;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Locale;
 
-
-
-
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -11,6 +19,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -25,26 +36,42 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 public class PlanList extends Application {
 
-	
+
 	//Buttons
 	Button closeButton;
 	Button addPlanButton;
 	Button deletePlanButton;
-	
+	Button validatePlanButton;
+	//Validation Strings
+	String valType;
+	String valDesc;
+	String valDate;
 	//Input Fields
 	TextField planTypeInput;
 	TextField planDescInput;
 	TextField planDateInput;
-
-	
+	//Stage and layouts
 	Stage window;
 	VBox layout;
 	MenuBar mainMenu;
+	VBox bottomLayout;
+	HBox bottomElements;
+	//Plan Table
 	TableView<Plan> planTable;
-	HBox bottomLayout;
+	public String selectedDate;
+	ComboBox<String> planTypeCombo;
+	Label infoText;
+	static DateTimeFormatter formatDate;
+	// Date
+	static DatePicker datePicker = new DatePicker();
+
+
+
+
 
 
 	// Main method
@@ -52,34 +79,32 @@ public class PlanList extends Application {
 		launch(args);
 	}
 
-
 	@Override 
 	public void start(Stage primaryStage) throws Exception {
 
-
 		window = primaryStage;						// Sets the primary stage
+		window.setTitle("Muki To-Do-List");			// Sets the title of the window
 		window.setOnCloseRequest(e -> { 			// Close the stage request event
 			e.consume();							// Consumes the close request 
 			closeApplication();						// Invokes the application closing method
 		});
 
-		window.setTitle("Muki");					// Sets the title of the window
 
-		BorderPane layout = new BorderPane();		// Adds BorderPane style layout
-		//layout.setPadding(new Insets(0,10,0,10));
-		layout.setTop(mainMenuSetup());								// Sets the Main Menu Bar to top
-		layout.setCenter(planTableSetup()); 								// Sets the Plans List to the center
-		layout.setBottom(editPlansSetup()); 								// Sets the Refresh button to the bottom
-		BorderPane.setAlignment(addPlansList(), Pos.CENTER); 	// Positions the Plans List in the center
+		BorderPane layout = new BorderPane(); 		// Adds BorderPane style layout
+		layout.setTop(mainMenuSetup());
+		layout.setCenter(planTableSetup()); 
+		layout.setBottom(editPlansSetup());
+
+		//BorderPane.setAlignment(addPlansList(), Pos.CENTER); 				
 
 
-		Scene window = new Scene(layout,720,500);	// Creates a new scene with BorderPane
-		window.getStylesheets().add("/Muki.css"); 	// CSS Stylesheet path
+		Scene window = new Scene(layout,800,500);	// Creates a new scene with BorderPane
+		window.getStylesheets().add("Muki.css"); 	// CSS Stylesheet path
 		primaryStage.setScene(window); 				// Adds the Scene to the Stage
 		primaryStage.setMinHeight(500);
-		primaryStage.setMinWidth(720);
+		primaryStage.setMinWidth(800);
 		primaryStage.setMaxHeight(800);
-		primaryStage.setMaxWidth(720);
+		primaryStage.setMaxWidth(800);
 		primaryStage.show();						// Makes the stage visible
 
 	}
@@ -88,9 +113,6 @@ public class PlanList extends Application {
 
 
 		Menu plansMenu = new Menu("File");													// Creates a new Menu item called Plans
-		//MenuItem newPlan = new MenuItem("New Plan");										// Creates a menu item called New Plan
-		//newPlan.setOnAction(e -> NewPlanBox.display());										// Sets the action to New Plan to display the Plan Page
-		//MenuItem viewPlans = new MenuItem("Edit Plans");									// Creates a menu item called Edit PLans
 		MenuItem statistics = new MenuItem("Statistics");									// Creates a menu item called Statistics
 		SeparatorMenuItem separatorPlans = new SeparatorMenuItem();							// Creates a seperator for the Plans Menu
 		MenuItem exitApp = new MenuItem("Exit");											// Creates a menu item called Exit
@@ -127,86 +149,111 @@ public class PlanList extends Application {
 		return mainMenu;
 	}
 
-	public VBox addPlansList() {					// Plans List setup
-
-		VBox planList = new VBox();				// Creates a new VBox node
-		planList.setSpacing(20);				// Sets layout item spacing
-		planList.setAlignment(Pos.TOP_CENTER);	// Positions the layout to center top
-
-		VBox listImage = new VBox();					// A VBox node for Plans List image
-		Image img = new Image("titlePlansList.png");	// Loads a new image
-		ImageView imgPainter = new ImageView(img);		// Creates a node to paint images		
-		listImage.setAlignment(Pos.CENTER);				// Alignes the image to the center
-		listImage.getChildren().addAll(imgPainter);		// Adds the image to the VBox node
-		planList.getChildren().addAll(listImage);	// Adds Image node and text node to the plansList node
+	public VBox editPlansSetup() {						// Button Setup
 
 
+		VBox bottomLayout = new VBox();
 
-
-
-
-
-		return planList;	// Return the planList node					
-	}
-
-	public HBox editPlansSetup() {						// Button Setup
+		//infoText = new Label("Add new plans here");
 
 
 		//Add btn
 		addPlanButton = new Button("Add");
+		addPlanButton.setDisable(true);
 		addPlanButton.setOnAction(e -> {
-			addPlan();
+			
+				try {
+					addPlan();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
 		});
 
 		//Add btn
 		deletePlanButton = new Button("Delete");
 		deletePlanButton.setOnAction(e -> {
-			
+
 			deletePlan();
-			
+
 		});
+
+		validatePlanButton = new Button("Validate");
+		validatePlanButton.setOnAction(e -> {
+			validateInput();
+		});
+
 
 		planTypeInput = new TextField();
 		planTypeInput.promptTextProperty().setValue("Plan Type");
 
+		// Plan Type Input as ComboBox Selection
+		planTypeCombo = new ComboBox<String>();
+		planTypeCombo.getItems().addAll(
+				"Work",
+				"School",
+				"Home",
+				"Personal",
+				"Misc"
+				);
+		planTypeCombo.setPromptText("Plan Type");
+		planTypeCombo.setEditable(false);        
+
+
+
+		// Plan Description Input as TextField
 		planDescInput = new TextField();
 		planDescInput.promptTextProperty().setValue("Plan Description");
 
-		planDateInput = new TextField();
-		planDateInput.promptTextProperty().setValue("Plan Date");
 
-		HBox bottomLayout = new HBox(10);
-		bottomLayout.setPadding(new Insets(30,10,30,10));
-		bottomLayout.getChildren().addAll(planTypeInput,planDescInput,planDateInput, addPlanButton, deletePlanButton);
+		datePicker.promptTextProperty().setValue("Plan Date");
+		datePicker.setOnAction(event -> {
+			// Formats the date
+			formatDate = DateTimeFormatter.ofPattern("MMM dd, yyyy",Locale.ROOT);
+			selectedDate = (datePicker.getValue()).format(formatDate);
+
+		});
+
+
+		HBox bottomElements = new HBox(10);
+		bottomElements.setPadding(new Insets(30,5,30,5));
+		bottomElements.getChildren().addAll(planTypeCombo,planDescInput,datePicker, validatePlanButton, addPlanButton, deletePlanButton);
+		bottomLayout.getChildren().addAll(bottomElements);
+
+
+		bottomLayout.setAlignment(Pos.BOTTOM_CENTER);
+		bottomLayout.setPadding(new Insets(20,20,20,20));
 		return bottomLayout;
 	}
 
 	@SuppressWarnings("unchecked")
-	public TableView<Plan> planTableSetup(){
-		
+	public TableView<Plan> planTableSetup() throws IOException{
+
 		//TYPE Column
-				TableColumn<Plan, String> typeColumn = new TableColumn<>("Type");
-				typeColumn.setMinWidth(75);
-				typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+		TableColumn<Plan, String> typeColumn = new TableColumn<>("Type");
+		typeColumn.setMinWidth(75);
+		typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-				//DESCRIPTION Column
-				TableColumn<Plan, String> descColumn = new TableColumn<>("Description");
-				descColumn.setMinWidth(500);
-				descColumn.setCellValueFactory(new PropertyValueFactory<>("desc"));
+		//DESCRIPTION Column
+		TableColumn<Plan, String> descColumn = new TableColumn<>("Description");
+		descColumn.setMinWidth(580);
+		descColumn.setCellValueFactory(new PropertyValueFactory<>("desc"));
 
-				//DATE Column
-				TableColumn<Plan, String> dateColumn = new TableColumn<>("Date");
-				dateColumn.setMinWidth(122);
-				dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+		//DATE Column
+		TableColumn<Plan, String> dateColumn = new TableColumn<>("Date");
+		dateColumn.setMinWidth(122);
+		dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
 
-				planTable = new TableView<>();
-				planTable.setItems(getPlans());
-				planTable.getColumns().addAll(typeColumn, descColumn, dateColumn);
-				
-				return planTable;
+		planTable = new TableView<>();
+		planTable.setItems(getPlans());
+		planTable.getColumns().addAll(typeColumn, descColumn, dateColumn);
+
+
+		return planTable;
 	}
-	
+
 	public void closeApplication(){					// Application closing method
 
 		Boolean confirmExit = ExitBox.display();		// Uses external class ExitBox method display() to determine
@@ -216,38 +263,108 @@ public class PlanList extends Application {
 		}
 	}
 
-	public void addPlan(){
+	public void addPlan() throws IOException{							// Method for adding plans
 
-	//Need to validate input!!!!	
+
+		// ADDS THE NEW PLAN TO THE PLAN TABLE
+		Plan plan = new Plan();
+		plan.setType(planTypeCombo.getSelectionModel().getSelectedItem());
+		plan.setDate(selectedDate);
+		plan.setDesc(planDescInput.getText());
+		planTable.getItems().add(plan);
+		
+		
+		
+		// SAVES PLAN TO CSV FILE
+		String csv = "C:/Users/Kristjan/workspace/Muki/src/planSave.csv";
+		String type = planTypeCombo.getSelectionModel().getSelectedItem();
+		String desc =planDescInput.getText();
+		String planString = type+";"+desc+";"+selectedDate;
+		String[] planToBeSaved = planString.split(";");
+		CSVWriter writer = new CSVWriter(new FileWriter(csv,true),';',CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.NO_ESCAPE_CHARACTER);
+		writer.writeNext(planToBeSaved);
+		writer.close();
+		
+		
 		
 	
-	Plan plan = new Plan();
-	plan.setType(planTypeInput.getText());
-	plan.setDesc(planDescInput.getText());
-	plan.setDate(planDateInput.getText());
-	planTable.getItems().add(plan);
-	planTypeInput.clear();
-	planDescInput.clear();
-	planDateInput.clear();
+		// CLEARS ALL FIELDS AND RESETS ADD BUTTON
+		planDescInput.clear();
+		planTypeCombo.valueProperty().set("Plan Type");
+		datePicker.getEditor().clear();
+		addPlanButton.setDisable(true);
+		
+		
+	
+		
+		
+		
+		
+		
+		
+
 	}
-	
-	public void deletePlan(){
-		
+
+	public void deletePlan(){						// Method for deleting plans
+
 		ObservableList<Plan> selectedPlans, allPlans;
 		allPlans = planTable.getItems();
 		selectedPlans = planTable.getSelectionModel().getSelectedItems();
 		selectedPlans.forEach(allPlans::remove);
 	}
-	
-	public ObservableList<Plan> getPlans(){
 
-		ObservableList<Plan> plans = FXCollections.observableArrayList();
+	public void validateInput() {
 
-		plans.add(new Plan ("Home", "Get food for the cat", "December 13"));
-		plans.add(new Plan ("School", "Complete assignment", "December 14"));
-		return plans;
+		valDesc = planDescInput.getText();
+		valType = planTypeCombo.getSelectionModel().getSelectedItem();
+		//valDate = datePicker.getValue().format(formatDate).toString();
+
+		// Enable Add Button if all requirements are met
+		if (valDesc.isEmpty() == false  && valType != null) {
+			addPlanButton.setDisable(false);
+
+
+
+		}
 
 
 
 	}
+
+	public ObservableList<Plan> getPlans() throws IOException{			// Observable List of plans, plan generation
+
+		ObservableList<Plan> plans = FXCollections.observableArrayList();
+
+		@SuppressWarnings("resource")
+
+
+		CSVReader reader = new CSVReader(new FileReader("C:/Users/Kristjan/workspace/Muki/src/planSave.csv"), ',' , '"' , 2);
+
+		String[] line;
+		System.out.println("Reading plan list...");
+		while ((line = reader.readNext()) != null) {
+			if (line != null) {
+				String planString = Arrays.toString(line);
+				String remove1= planString.replace("[", "");
+				String remove2= remove1.replace("]","");
+				planString = remove2;
+				String [] str = planString.split(";");
+
+				System.out.println(planString);
+
+
+				plans.add(new Plan (str[0],str[1],str[2]));
+
+			}
+		}
+
+		return plans;
+
+	}
+
+
+
+
+
+
 }

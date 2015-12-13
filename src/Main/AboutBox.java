@@ -1,5 +1,4 @@
 package Main;
-
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -36,7 +35,7 @@ public class AboutBox {
 		layout.getChildren().addAll(imgLayout,about,authorLabel, closeButton);		// Adds all the nodes to the layout
 		layout.setAlignment(Pos.CENTER);									// Positions it to the center
 		Scene scene = new Scene(layout);									// Creates a new scene with the layout
-		scene.getStylesheets().add("/Muki.css");							// Adds CSS
+		scene.getStylesheets().add("Muki.css");							// Adds CSS
 		window.setScene(scene);												// Adds the scene to the stage
 		window.showAndWait();												// Restricts clicking outside the stage
 	}

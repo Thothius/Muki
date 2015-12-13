@@ -1,5 +1,7 @@
 package Main;
 
+import java.time.LocalDate;
+
 public class Plan {
 	
 private String type;
@@ -10,7 +12,7 @@ public Plan(){
 	
 	this.type="";
 	this.desc="";
-	this.date="";
+	this.date = "";
 }
 
 public Plan(String type, String desc, String date){
@@ -18,8 +20,8 @@ public Plan(String type, String desc, String date){
 	
 	this.type= type;
 	this.desc= desc;
-	this.date= date;
-	
+	this.date = date;
+
 }
 
 
@@ -43,8 +45,8 @@ public void setDesc(String desc) {
 public String getDate() {
 	return date;
 }
-public void setDate(String date) {
-	this.date = date;
+public void setDate(String selectedDate) {
+	this.date = selectedDate;
 }
 
 

@@ -22,3 +22,15 @@
 		-fx-background-color: #0096c9;
 		-fx-text-fill: white;
 }
+
+.table-view {
+	
+	-fx-base: #f6f6f6;
+	-fx-control-inner-background: #fbfbfb;
+}
+.combo-box-base  
+{
+
+-fx-background-color: #5dbed0;
+
+}
