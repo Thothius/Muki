@@ -6,12 +6,12 @@
 <b>Current functionality</b>
 <ul>
 <li>
-UI; Custom CSS; Add/Remove plans; InputValidation
+UI; Custom CSS; Add/Remove plans; InputValidation; Save file
 </li>
 </ul>
-<b>Planned functionalty</b>
+<b>Planned in the future:</b>
 <ul>
 <li>
-Read and Write to a file
+Visual tweaks; Timed plans; Statistics
 </li>
 </ul>
