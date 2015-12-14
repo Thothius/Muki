@@ -1,6 +1,13 @@
 # Muki
 
-<b>Muki is a prototype "To do list" application.</b> Current version 0.1a
+<b>Muki is a prototype "To do list" application.</b>
+<br>
+Current version 0.1a
+<br>
+<b> Author Kristjan Saaremets </b>
+<br>
+GNU General Public License
+<br>
 
 
 <b>Current functionality</b>
