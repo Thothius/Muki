@@ -231,6 +231,7 @@ public class PlanList extends Application {
 		// DATE INPUT
 		datePicker = new DatePicker();											// Creates a new Date Picker
 		datePicker.promptTextProperty().setValue("Plan Date");					// Sets the prompt text
+		datePicker.setEditable(false);											// Disable date field editing
 		datePicker.setOnAction(event -> {										// Adds an action event to it
 
 			formatDate = DateTimeFormatter.ofPattern("MMM dd yyyy",Locale.ROOT);	// Date formatter with a specific pattern
