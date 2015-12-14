@@ -7,6 +7,8 @@ import javafx.scene.text.Text;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 
+// The ExitBox class is used to display a pop-up window when the user wants to close the application. The users choice is returned.
+
 
 public class ExitBox {							// A method to display a pop-up stage and ask the user if they want to close the application
 
@@ -44,7 +46,7 @@ public class ExitBox {							// A method to display a pop-up stage and ask the u
 		exitLayout.getChildren().addAll(confirmText,buttonLayout);	// Adds the info text node and button layout node 
 
 		Scene scene = new Scene(exitLayout);						// Creates a new scene with the final layout
-		scene.getStylesheets().add("/Muki.css");					// Adds CSS to the scene
+		scene.getStylesheets().add("Muki.css");						// Adds CSS to the scene
 		window.setScene(scene);										// Adds the scene to the stage
 		window.showAndWait();										// Restricts any clicks outside the stage
 		return confirmExit;											// Returns the choice of the user

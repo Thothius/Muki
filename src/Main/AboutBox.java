@@ -9,6 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.geometry.*;
 
 
+// The AboutBox class is used to display a pop-up window and some info text about the application and its author. Nothing is returned.
+
+
 public class AboutBox {
 	public static void display(){										// A method to display the About pop-up
 		
@@ -22,7 +25,7 @@ public class AboutBox {
 		
 		VBox imgLayout = new VBox();
 		imgLayout.setAlignment(Pos.TOP_CENTER);
-		Image img = new Image("titleAbout.png");	// Loads a new image
+		Image img = new Image("logo.png");	// Loads a new image
 		ImageView imgPainter = new ImageView(img);		// Creates a node to paint images		
 		imgLayout.getChildren().add(imgPainter);
 		
