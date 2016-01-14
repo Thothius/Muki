@@ -1,6 +1,5 @@
 # Muki
-
-    Muki is a prototype "To do list" application.
+    Muki is a prototype "To do list" application, that lets you create, sort and delete plans.
     Copyright (C) 2016  Kristjan Saaremets
 
     This program is free software; you can redistribute it and/or modify
@@ -14,17 +13,10 @@
     GNU General Public License for more details.
 
 <br>
-Current version 0.1a
+<b>Current version: </b> 0.1a
 <br>
-<b>Current functionality</b>
-<ul>
-<li>
-UI; Custom CSS; Add/Remove plans; InputValidation; Save file
-</li>
-</ul>
-<b>Planned in the future:</b>
-<ul>
-<li>
-Visual tweaks; Timed plans; Statistics
-</li>
-</ul>
+<b>Current functionality: </b> UI; Custom CSS; Add/Remove plans; InputValidation; Save file
+<br>
+<b>Planned in the future: </b>Visual tweaks; Timed plans; Statistics
+<br>
+<b> Contact for feedback and bug reports: </b>saaremets[dot]kristjan[at]gmail[dot]com
