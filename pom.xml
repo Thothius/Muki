@@ -3,7 +3,7 @@
   <groupId>Muki</groupId>
   <artifactId>Muki</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Muki to-do-list application</name>
+  <name>Muki to-do-list</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>
