@@ -13,10 +13,10 @@
     GNU General Public License for more details.
 
 <br>
-<b>Current version: </b> 0.1a
+<b>Current version: </b> 0.2
 <br>
-<b>Current functionality: </b> UI; Custom CSS; Add/Remove plans; InputValidation; Save file
+<b>Current functionality: </b> UI; Custom CSS; Add/Remove plans; InputValidation; Save file; About and Help page
 <br>
-<b>Planned in the future: </b>Visual tweaks; Timed plans; Statistics
+<b>Planned in the future: </b>Visual tweaks; Timed plans; Statistics; 
 <br>
 <b> Contact for feedback and bug reports: </b>saaremets[dot]kristjan[at]gmail[dot]com
